@@ -83,6 +83,7 @@ public class WebConfigurer implements ServletContextListener {
      * Initializes Spring and Spring MVC.
      */
     private void initSpring(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
+        //1 、 app 服务spring
         log.debug("Configuring Spring Web application context");
         AnnotationConfigWebApplicationContext appDispatcherServletConfiguration = new AnnotationConfigWebApplicationContext();
         appDispatcherServletConfiguration.setParent(rootContext);
@@ -95,6 +96,7 @@ public class WebConfigurer implements ServletContextListener {
         appDispatcherServlet.setLoadOnStartup(1);
         appDispatcherServlet.setAsyncSupported(true);
 
+        //2 、 api 服务spring
         log.debug("Registering Activiti public REST API");
         AnnotationConfigWebApplicationContext apiDispatcherServletConfiguration = new AnnotationConfigWebApplicationContext();
         apiDispatcherServletConfiguration.setParent(rootContext);
