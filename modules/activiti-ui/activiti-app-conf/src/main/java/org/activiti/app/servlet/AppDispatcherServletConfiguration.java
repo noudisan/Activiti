@@ -62,6 +62,7 @@ public class AppDispatcherServletConfiguration extends WebMvcConfigurationSuppor
 
     @Bean
     public MultipartResolver multipartResolver() {
+        //文件上传配置
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(environment.getProperty("file.upload.max.size", Long.class));
         return multipartResolver;
@@ -71,7 +72,9 @@ public class AppDispatcherServletConfiguration extends WebMvcConfigurationSuppor
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
         log.debug("Creating requestMappingHandlerMapping");
         RequestMappingHandlerMapping requestMappingHandlerMapping = new RequestMappingHandlerMapping();
+        //后缀匹配
         requestMappingHandlerMapping.setUseSuffixPatternMatch(false);
+        //是否移除 url中的分号
         requestMappingHandlerMapping.setRemoveSemicolonContent(false);
         Object[] interceptors = {localeChangeInterceptor()};
         requestMappingHandlerMapping.setInterceptors(interceptors);
@@ -80,6 +83,7 @@ public class AppDispatcherServletConfiguration extends WebMvcConfigurationSuppor
     
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        //json 转换
         addDefaultHttpMessageConverters(converters);
         for (HttpMessageConverter<?> converter: converters) {
             if (converter instanceof MappingJackson2HttpMessageConverter) {
